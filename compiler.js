@@ -1,7 +1,7 @@
 const fs = require('fs');
-const functions = require('functions.js');
+const functions = require('./functions.js');
 
-const codeFile = process.argv[0];
+const codeFile = process.argv[2];
 
 // If the specified file is not found
 if (!fs.existsSync(codeFile)) {
@@ -10,7 +10,7 @@ if (!fs.existsSync(codeFile)) {
 }
 
 let LineNumber = 0, SymbolNumber = 0;
-const ArrayAllCodeFile = fs.readFileSync(codeFile).split('\n');
+const ArrayAllCodeFile = fs.readFileSync(codeFile, { encoding:'utf-8'}).split('\n');
 
 // Converting commands to binary code
 ArrayAllCodeFile.forEach(line => {
@@ -18,7 +18,7 @@ ArrayAllCodeFile.forEach(line => {
     line = functions.trim(line);
 
     // If the string is empty, then skip the iteration
-    if (!line) { 
+    if (!line) {
         return;
     }
 

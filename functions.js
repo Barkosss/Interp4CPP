@@ -5,9 +5,11 @@ module.exports = {
         let newLine = "";
 
         for(let char of line) {
-            // ...
-            // ...
-            // ...
+            if (char != ' ') {
+                newLine += char;
+            } else if (char == ' ' && newLine.slice(-1) != ' ' && newLine.length) {
+                newLine += ' ';
+            }
         }
 
         return newLine;
