@@ -1,7 +1,13 @@
 const fs = require('fs');
 const functions = require('./functions.js');
 
+// Database
+const { Database, LocalStorage, JSONFormatter } = require('moonlifedb');
+const db = new Database(new LocalStorage({ path: './' }), { useTabulation: new JSONFormatter({ whitespace: "\t" }) });
+
+const includeFiles = [];
 const codeFile = process.argv[2];
+
 
 // If the specified file is not found
 if (!fs.existsSync(codeFile)) {
@@ -23,6 +29,17 @@ ArrayAllCodeFile.forEach(line => {
     }
 
     // Debug
+    if (line.startsWith('#')) {
+        if (line.indexOf('"') != -1) {
+            includeFiles.push(line.slice(line.indexOf('\"') + 1, line.slice(line.indexOf('\"') + 1, line.length).indexOf('"')));
+            console.log(`Include file: ${line.slice(line.indexOf('\"') + 1, line.slice(line.indexOf('\"') + 1, line.length).indexOf('\"'))}`)
+            console.log(`File: ${line.slice(line.indexOf('\"'))} |  ${line.indexOf('\"')}`);
+            console.log(includeFiles);
+        } else {
+            console.log(`Include module: ${line.slice(line.indexOf('<') + 1, line.indexOf('>'))}`)
+        }
+    }
+
     console.log(line);
     // Continue coding...
 });
